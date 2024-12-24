@@ -1,7 +1,5 @@
 import numpy as np 
 import activations 
-import linutil
-
 
 from typing import List, Any
 

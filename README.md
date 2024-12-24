@@ -29,6 +29,14 @@ Alternatively, ADAM is also implemented
 ```python
 opt = optimizer.ADAM(nn)
 ```
+## Requirements
+To use the project:
+- numpy
+
+To run the unit tests:
+- tqdm (to see loading bars)
+- keras (to load mnist)
+- matplotlib (to plot the data)
 
 ## Notebook to train a classifier
 ```
