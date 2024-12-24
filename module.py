@@ -55,29 +55,18 @@ class Module():
         # current label
         self.yhat = None
 
-        # friday night
         self.propagated_gradients = [None]
 
-    #     #changes Friday night
-    #     self.__custom_loss = False 
-
-
-    # def setCustomLoss(self, b):
-    #     assert isinstance(b, bool), 'b input must be a boolean'
-    #     self.__custom_loss = b
-    
-    # def enableCustomLoss(self):
-    #     self.setCustomLoss(True)
 
     def __call__(self, x, y):
         return self.insert(x, y)
     
 
-    """
-    TODO check the validity of each loss function
-    """
+    
     def setLossFunction(self, loss):
-
+        """
+        TODO check the validity of each loss function
+        """
         self.loss_instance = loss()
         self.loss_function = lambda x,y : self.loss_instance(x,y)
         self.loss_gradient = lambda x,y : self.loss_instance.gradient(x,y)

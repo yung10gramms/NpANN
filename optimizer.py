@@ -1,9 +1,6 @@
 import numpy as np 
 import module 
 
-# import sys
-# sys.path.append('../')
-
 class Optimizer(): 
     def __init__(self, m : module.Module): 
         pass 
@@ -70,10 +67,6 @@ class ADAM(Optimizer):
 
 
 class SGD(Optimizer):
-    # def __init__(self, m) -> None:
-    #     self
-    #     self.module = m
-
     def __init__(self, m: module.Module, learning_rate = 0.9, dynamic_step = False, weight_normalization = False): 
         super().__init__(m)
         self.module = m
@@ -124,9 +117,7 @@ class SGD(Optimizer):
                 self.module.normalizeBias(i)
             
 
-        # print(f'zero grads in weights {noZero}/{len(self.module.weights)}')
-            
-            
+        
 
         
     
