@@ -21,9 +21,9 @@ discriminator.appendLayer(2, activation='softmax')
 discriminator.setLossFunction(loss.CrossEntropyLoss)
 ```
 ### Instantiate an optimizer
-e.g. wih stochastic gradient descent with dynamic step size rule
+e.g. with stochastic gradient descent with dynamic step size rule
 ```python
-dis_opt = optimizer.SGD(discriminator, learning_rate=0.1, dynamic_step=True, weight_normalization=True)
+dis_opt = optimizer.SGD(discriminator, dynamic_step=True, weight_normalization=True)
 ```
 Alternatively, ADAM is also implemented
 ```python
