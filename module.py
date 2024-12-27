@@ -321,11 +321,19 @@ class Module():
 
 
     def printShape(self, readable=True):
+        '''
+        function that prints the shape of the neural network, including the Weights dimensions
+        at each layer, the number of weights and biases, as well as an approximation of the model size in RAM.
+
+        arguments:
+        readable    : if set to false it will print the size of the NN in Kbytes. Else, it will print it in a human-readable way. Defaults to True.      
+        '''
         print(f'Number of Layers: {self.total_layers}\nTotal Parameters: {self.total_biases+self.total_weights} ({self.total_weights} weights and {self.total_biases} biases)')
+        byte_size = 8*(self.total_biases+self.total_weights)
         if not readable:
-            print(f'Size on RAM (approximate) {8*(self.total_biases+self.total_weights)/1024:.2f} kb')
+            print(f'Size on RAM (approximate) {byte_size/1024:.2f} kb')
         else:
-            st, sz = self.__getNNsize(8*(self.total_biases+self.total_weights))
+            st, sz = self.__getNNsize(byte_size)
             print(f'Size on RAM (approximate) {sz:.2f} {st}b')
         print(' x '.join([f'({str(layer)} {str(self.activs[i])})' for i, layer in enumerate(self.layers)]))
         print('Weight dimensions: '+', '.join([f'{str(np.shape(w))}' for w in self.weights]))
