@@ -67,14 +67,35 @@ class ADAM(Optimizer):
 
 
 class SGD(Optimizer):
-    def __init__(self, m: module.Module, learning_rate = 0.9, dynamic_step = False, weight_normalization = False): 
-        super().__init__(m)
-        self.module = m
-        self.learning_rate = learning_rate
+    __learning_rate_default = 0.9
+
+    def __init_learning_rate(self, learning_rate, dynamic_step):
+        self.learning_rate = learning_rate 
         self.dynamic_step = dynamic_step
-        if dynamic_step:
+        if dynamic_step and (learning_rate is not None):
             print('Warning: dynamic step option will ignore learning rate')
             self.k = 1
+            self.learning_rate = None
+            return
+        elif not dynamic_step and (learning_rate is None):
+            self.learning_rate = self.__learning_rate_default
+            return
+        
+
+    def __init__(self, m: module.Module, learning_rate = None, dynamic_step = False, weight_normalization = False): 
+        '''
+        Initialize Stochastic Gradient Descent Algorithm.
+
+        arguments:
+        m                    : module
+        learning_rate        : learning rate, defaults to 0.9
+        dynamic_step         : flag to apply dynamic step rule
+        weight_normalization : flag to determine whether weights are going to be normalized
+        '''
+        super().__init__(m)
+        self.module = m
+        
+        self.__init_learning_rate(learning_rate, dynamic_step)
 
         self.weight_normalization = weight_normalization
 
