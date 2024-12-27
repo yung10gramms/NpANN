@@ -90,6 +90,14 @@ class Module():
         return 
 
     def appendLayer(self, n, initialization = 'xavier', activation = None):
+        '''
+        Function that appends a layer at the end of the model. The layer will be fully connected to the previous one. 
+
+        arguments:
+        n                 : size of the layer
+        initialization    : initialization to apply to the layer. Defaults to Xavier
+        activation        : activation function for the layer. Defaults to ReLU
+        '''
         assert initialization in self.valid_initializations, f'ERROR: {initialization} not a valid initialization'
 
         self.total_layers += 1
@@ -128,6 +136,9 @@ class Module():
         self.propagated_gradients.append(None)
 
     def insert(self, x, y):
+        '''
+        Insert an input-label pair to the model. Equivalent to calling the instance.
+        '''
         assert not self.isEmpty(), 'Cannot pass input into empty Module'
         # TODO fix these assertions
         # assert np.shape(x) == np.shape(self.states[0]), f"Invalid shape of input : is {np.shape(x)} and expected {np.shape(self.states[0])}"
@@ -139,13 +150,13 @@ class Module():
 
 
     def forward(self):
+        '''
+        Forward the input, calculating all the values of all states.
+        '''
         x = self.input
-        
-        
 
         for i, _ in enumerate(self.states):
             if i == 0:
-
                 self.states[0] = x
                 continue
             activation_class = self.valid_activations[self.activs[i]]
@@ -161,6 +172,9 @@ class Module():
         return 
 
     def calc_loss(self):
+        '''
+        Calculate the value of the loss function. If working with batches, the function will calculate the average across inputs.
+        '''
         assert self.yhat is not None, 'Label y cannot be none. Make sure you forward() before you call loss_function'
         if self.output.ndim == 1:
             self.loss = self.loss_function(self.output, self.yhat)
@@ -168,15 +182,16 @@ class Module():
             return self.loss
         
         (_, batch) = np.shape(self.output)
-        # print(f'output for loss {np.shape(self.output)}')
-        # print(f'batch for loss {batch}')
         
         self.loss = 1/batch*np.sum(self.loss_function(self.output[:, j], self.yhat[:, j]) for j in range(batch))
 
         return self.loss
 
     def backward(self):
-        
+        '''
+        Apply backpropagation algorithm on the model.
+        '''
+
         assert self.total_layers > 1, f'Module too small to backpropagate.\nNum layers: {self.total_layers}.\nExpected: >1'
         
         logs_flag = False
@@ -187,7 +202,7 @@ class Module():
         self.gradsW = [None]*len(self.weights)
         self.gradsb = [None]*len(self.biases)
         
-    
+        
         self.calc_loss()
 
         g_map[-1] = self.loss_gradient(self.output, self.yhat)
@@ -224,11 +239,7 @@ class Module():
             actClass = self.valid_activations[self.activs[i+1]]
             actInst = actClass()
 
-            """
-            TODO 
-            """
             sigma_prime_z =  actInst.gradient(np.squeeze(z_map[i])) 
-
 
             """
             TODO fix this problem: find a cleaner method to handle jacobians
@@ -249,13 +260,9 @@ class Module():
                 print(f'a = sigma_prime_z * g_map[i+1] = {np.shape(a)}')
                 
 
-            
             if self.states[i].ndim > 1:
                 X = self.states[i]
                 
-                """
-                changes wednesday
-                """
                 (_, N) = np.shape(a)
                 self.gradsW[i] = a @ X.T/N 
 
