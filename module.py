@@ -270,18 +270,15 @@ class Module():
 
             g_map[i] =  self.weights[i].T @ a
             
-            # friday night
+            # Store propagated gradient into a member variable
             self.propagated_gradients[i] = g_map[i]
 
             if logs_flag:
-                # print(f'SHAPE OF W.T: {np.shape(self.gradsW[i].T)}')
+                
 
                 print(f'SHAPE OF gradW: {np.shape(self.gradsW[i])}')
                 print(f'SHAPE OF gradb: {np.shape(self.gradsb[i])}')
                 
-                # print(f'SHAPE OF W.T: {np.shape(self.gradsW[i].T)}')
-                
-                # print(f'dims of product  : {np.shape(self.gradsW[i].T)} times {np.shape(np.diag(actInst.gradient(z_map[i])))} times {np.shape(g_map[i+1])}')
                 print(f'g map new dimensions {np.shape(g_map[i])}')
 
         return
@@ -310,10 +307,26 @@ class Module():
             return
         self.biases[i] /= nb
 
+    def __getNNsize(self, size_bytes):
+        lgn = np.log10(size_bytes)
+        idx = np.floor(lgn/3)
+        
+        if lgn < 3:
+            return ('', size_bytes)
+        if lgn < 6:
+            return ('K', size_bytes/1024)
+        if lgn < 9:
+            return ('G', size_bytes/1024**2)
+        return ('T', size_bytes/1024**3)
 
-    def printShape(self):
+
+    def printShape(self, readable=True):
         print(f'Number of Layers: {self.total_layers}\nTotal Parameters: {self.total_biases+self.total_weights} ({self.total_weights} weights and {self.total_biases} biases)')
-        print(f'Size on RAM (approximate) {8*(self.total_biases+self.total_weights)/1024:.2f} kb')
+        if not readable:
+            print(f'Size on RAM (approximate) {8*(self.total_biases+self.total_weights)/1024:.2f} kb')
+        else:
+            st, sz = self.__getNNsize(8*(self.total_biases+self.total_weights))
+            print(f'Size on RAM (approximate) {sz:.2f} {st}b')
         print(' x '.join([f'({str(layer)} {str(self.activs[i])})' for i, layer in enumerate(self.layers)]))
         print('Weight dimensions: '+', '.join([f'{str(np.shape(w))}' for w in self.weights]))
         
