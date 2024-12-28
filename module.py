@@ -3,8 +3,6 @@ import activations
 
 from typing import List, Any
 
-
-
 class Module():
     weights : List[Any]
     biases  : List[Any]
@@ -202,7 +200,7 @@ class Module():
         self.gradsW = [None]*len(self.weights)
         self.gradsb = [None]*len(self.biases)
         
-        
+
         self.calc_loss()
 
         g_map[-1] = self.loss_gradient(self.output, self.yhat)

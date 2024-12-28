@@ -72,8 +72,9 @@ class SGD(Optimizer):
     def __init_learning_rate(self, learning_rate, dynamic_step):
         self.learning_rate = learning_rate 
         self.dynamic_step = dynamic_step
-        if dynamic_step and (learning_rate is not None):
-            print('Warning: dynamic step option will ignore learning rate')
+        if dynamic_step:
+            if learning_rate is not None:
+                print('Warning: dynamic step option will ignore learning rate')
             self.k = 1
             self.learning_rate = None
             return
