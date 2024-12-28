@@ -200,11 +200,11 @@ class Module():
         self.gradsW = [None]*len(self.weights)
         self.gradsb = [None]*len(self.biases)
         
-
+        
         self.calc_loss()
 
         g_map[-1] = self.loss_gradient(self.output, self.yhat)
-       
+
         if logs_flag:
             print(f' number of weights {len(self.weights)}, number of layers {self.total_layers}, number of states {len(self.states)}')
 
