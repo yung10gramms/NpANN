@@ -321,8 +321,10 @@ class Module():
         if lgn < 6:
             return ('K', size_bytes/1024)
         if lgn < 9:
-            return ('G', size_bytes/1024**2)
-        return ('T', size_bytes/1024**3)
+            return ('M', size_bytes/1024**2)
+        if lgn < 12:
+            return ('G', size_bytes/1024**3)
+        return ('T', size_bytes/1024**4)
 
 
     def printShape(self, readable=True):
