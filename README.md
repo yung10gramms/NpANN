@@ -5,9 +5,6 @@ The two testing scripts are `mnist_test.ipynb` and the `mnist_GAN.ipynb`, for tr
 
 ![NN diagram](/images%20README/nn_diagram.png)
 
-## Quick note
-This branch gets the mnist dataset from `Tensorflow` (instead of `keras`), since the version of python was upgraded from 3.10 to 3.12. If you are ok with getting mnist from `keras` directly, consider viewing the branch `branchPy3_10`. The branch in question is not maintained whatsoever, and it is recommended that you work with this branch (`main`), instead.
-
 ## Get started
 ### Define the model
 ```python
@@ -41,18 +38,19 @@ To run the unit tests:
 - Tensorflow (to load mnist)
 - matplotlib (to plot the data)
 
+## Technical Details concerning branches
+Recently updated workspace, moving from Python 3.10 to 3.12. This has resulted to having to adapt code to resolve some problems. Namely,
+- This branch gets the mnist dataset from `Tensorflow` (instead of `keras` explicitly, like other branches). If you are ok with getting mnist from `keras` directly, consider viewing the branch `branchPy3_10`. The branch in question is not maintained whatsoever, and it is recommended that you work with this branch (`main`), instead.
+
+Also, this branch does not contain the `mnist_GAN.ipynb` file, since the ANN is not trained properly, and hence, it has been removed.
+
 ## Notebook to train a classifier
 ```
 mnist_test.ipynb
 ```
 
 ## Notebook for a basic GAN
-```
-mnist_gan.ipynb
-```
-
-## Notebook for a basic GAN
 ### Only learning to produce a specific number
 ```
-mnist_gan_specific.ipynb
+mnist_GAN_specific.ipynb
 ```
