@@ -1,7 +1,7 @@
 # NpANN
-A library for Artifical Neural Networks only using Numpy. The library can hanle arbitrarily many layers of any size, which all without parallelization in CPU. The project provides way to very naturally and very similarly to pytorch load batches of data, using the `datahandler.py` script, build the model and configure it, while also debugging it with many useful log messages using the script `module.py`. There's also implementations for optimizer in the script `optimizer.py`. As of now, only SGD (with some stepsize rules) and ADAM are implemented.
+A library for Artifical Neural Networks only using Numpy. The library can hanle arbitrarily many layers of any size, all of which run in CPU. The project provides way to -very naturally and very similarly to pytorch- load batches of data, using the `datahandler.py` script, build the model and configure it, while also debugging it with many useful log messages using the script `module.py`. There's also implementations for optimizer in the script `optimizer.py`. As of now, only SGD (with some stepsize rules) and ADAM are implemented.
 
-The two testing scripts are `mnist_test.ipynb` and the `mnist_GAN.ipynb`, for training a classifier and a GAN architecture, respectively. Note that the project is still W.I.P., and it is only intended to be a side project for mostly educational purposes.
+The two testing scripts are `mnist_test.ipynb` and the `mnist_GAN_specific.ipynb`, for training a classifier and a GAN architecture, respectively. Note that the project is still W.I.P., and it is only intended to be a side project for mostly educational purposes.
 
 ![NN diagram](/images%20README/nn_diagram.png)
 
@@ -13,17 +13,17 @@ nn = Module()
 
 # Append some layers, defaults to ReLU
 for i in range(2):
-    discriminator.appendLayer(100)
+    nn.appendLayer(100)
 
 # Append a layers with specified activation
-discriminator.appendLayer(2, activation='softmax')
+nn.appendLayer(2, activation='softmax')
 # Set a loss function
-discriminator.setLossFunction(loss.CrossEntropyLoss)
+nn.setLossFunction(loss.CrossEntropyLoss)
 ```
 ### Instantiate an optimizer
 e.g. with stochastic gradient descent with dynamic step size rule
 ```python
-dis_opt = optimizer.SGD(discriminator, dynamic_step=True, weight_normalization=True)
+opt = optimizer.SGD(nn, dynamic_step=True, weight_normalization=True)
 ```
 Alternatively, ADAM is also implemented
 ```python
