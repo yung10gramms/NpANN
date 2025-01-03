@@ -29,6 +29,34 @@ Alternatively, ADAM is also implemented
 ```python
 opt = optimizer.ADAM(nn)
 ```
+
+### Train the model
+```python
+# Seemlessly define a handler to work with data
+batch_size = 50
+dataHandler = datahandler.DataHandler(x_train, y_train, batch_size=batch_size)
+
+no_epochs = 20
+for j in range(no_epochs):
+    # Reset the index at loading data
+    dataHandler.reset()
+    # Very intuitivelly load the each available batch
+    while dataHandler.hasNext():
+        (batchX, batchY) = dataHandler.nextBatch()
+        # Insert the data by calling the instance, 
+        # also equivalent to nn.insert(batchX, batchY)
+        nn(batchX, batchY)
+        # Feed forward
+        nn.forward()
+        # Calculate loss explicitly, 
+        # although it is calculated internally in backpropagation anyway
+        nn.calc_loss()
+        
+        nn.backward()
+        # Take a negative gradient step
+        opt.step()
+```
+
 ## Requirements
 To use the project:
 - numpy
