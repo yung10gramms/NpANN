@@ -1,5 +1,6 @@
 import numpy as np 
-import activations 
+# from .activations import * 
+import activations
 
 from typing import List, Any
 

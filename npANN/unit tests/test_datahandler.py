@@ -1,4 +1,4 @@
-import datahandler 
+import datahandler as datahandler 
 import numpy as np
 from numpy.random import randn 
 

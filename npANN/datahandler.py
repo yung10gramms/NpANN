@@ -1,8 +1,8 @@
 import numpy as np 
+from shuffleBatch import reshuffle
 
 class DataHandler(): 
 
-    __data = None
     _counter = 0
 
     def __init__(self, dataX, dataY, batch_size = 1):
@@ -24,9 +24,19 @@ class DataHandler():
         self.reset()
 
 
-    def reset(self):
+    def reset(self, shuffle_data=True):
+        '''
+        Function to reset the index of the data handler.
+
+        arguments:
+        shuffle_data : Flag to determine whether to shuffle data, defaults to True.
+        '''
         self.__end_flag = False
         self._counter = 0
+        
+        if shuffle_data:
+            (self.__dataX, self.__dataY) = reshuffle(self.__dataX, self.__dataY)
+
 
     def endFlag(self):
         return self.__end_flag
@@ -35,7 +45,9 @@ class DataHandler():
         return not self.endFlag()
 
     def nextBatch(self):
-
+        '''
+        Get next batch for current iteration. See README.md for expected use.
+        '''
         next_batch = self._counter+self.__batch_size
         if next_batch >= self.__num_data:
             next_batch = -1
