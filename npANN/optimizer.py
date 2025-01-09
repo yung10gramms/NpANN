@@ -11,6 +11,14 @@ class Optimizer():
 class ADAM(Optimizer):
 
     def __init__(self, m : module.Module, alpha = 0.001, beta_1 = 0.9, beta_2 = 0.999, epsilon = 1e-8):
+        '''
+        ADAM optimizer, as proposed by the original paper, 
+        without the optimizations that the team additionally describes.
+
+        '''
+        
+        assert m is not None, 'Error: module instance cannot be None'
+
         self.module = m
         self.alpha = alpha
         self.beta_1 = beta_1
