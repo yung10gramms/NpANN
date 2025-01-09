@@ -1,11 +1,11 @@
-from keras.datasets import mnist
+from tensorflow.keras.datasets import mnist
 
 import numpy as np
 
-import module
-import optimizer 
+import npANN.model.module as module
+import npANN.model.optimizer as optimizer 
 import loss 
-import datahandler
+import npANN.batchHandlers.datahandler as datahandler
 
 
 from matplotlib import pyplot as plt

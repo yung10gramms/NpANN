@@ -1,12 +1,12 @@
-import module 
-import optimizer 
+import module as module 
+import optimizer as optimizer 
 import loss 
 
 from matplotlib import pyplot as plt
 import numpy as np
 from tqdm import tqdm
 
-import datahandler
+import datahandler as datahandler
 
 
 def test_batch():

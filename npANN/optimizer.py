@@ -1,5 +1,5 @@
 import numpy as np 
-import module 
+import module as module 
 
 class Optimizer(): 
     def __init__(self, m : module.Module): 
